@@ -32,33 +32,6 @@ def login_query(user, password, query):
     time.sleep(15)
 
 
-def sorting(sort_filter):
-    sortlist = None
-    if sort_filter == 1:
-        sortlist = 'DESC recommended_score'
-    elif sort_filter == 2:
-        sortlist = 'ASC position'
-    elif sort_filter == 3:
-        sortlist = 'ASC name'
-    elif sort_filter == 4:
-        sortlist = 'DESC name'
-    elif sort_filter == 5:
-        sortlist = 'ASC price'
-    elif sort_filter == 6:
-        sortlist = 'DESC price'
-
-    # click the sorting filter
-    sort = driver.find_element(By.XPATH, '//*[@id="root"]/main/section/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div/div/div/button')
-    chose = driver.find_element(By.CSS_SELECTOR, f'button[value="{sortlist}"]')
-
-    sort.send_keys(Keys.ENTER)
-    time.sleep(3)
-    chose.click()
-
-    # for handling not yet item
-    time.sleep(15)
-
-
 def scrap():
     while True:
         main = driver.find_elements(By.CSS_SELECTOR, 'li.ProductCard')
@@ -87,6 +60,35 @@ def scrap():
         time.sleep(15)
 
 
+def scrap_sorting(sort_filter):
+    sortlist = None
+    if sort_filter == 1:
+        sortlist = 'DESC recommended_score'
+    elif sort_filter == 2:
+        sortlist = 'ASC position'
+    elif sort_filter == 3:
+        sortlist = 'ASC name'
+    elif sort_filter == 4:
+        sortlist = 'DESC name'
+    elif sort_filter == 5:
+        sortlist = 'ASC price'
+    elif sort_filter == 6:
+        sortlist = 'DESC price'
+
+    # click the sorting filter
+    sort = driver.find_element(By.XPATH, '//*[@id="root"]/main/section/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/div/div/div/button')
+    chose = driver.find_element(By.CSS_SELECTOR, f'button[value="{sortlist}"]')
+
+    sort.send_keys(Keys.ENTER)
+    time.sleep(3)
+    chose.click()
+
+    # for handling not yet item
+    time.sleep(15)
+
+    scrap()
+
+
 def run():
     runing = int(input('please choose\n1. scraping only\n2. scraping with sorting\nchoose your number: '))
     user = input('Input Your Username')
@@ -97,17 +99,15 @@ def run():
         login_query(user=user, password=password, query=query)
         scrap()
         driver.close()
-        print('all item has scrap')
     elif runing == 2:
         sorter = int(input('sort by:\n1. recomended\n2. popular\n3. name A to Z\n4. name Z to A\n5. price low to high\n6. price high to low\nEnter the number you want: '))
         login_query(user=user, password=password, query=query)
-        sorting(sorter)
-        scrap()
+        scrap_sorting(sorter)
         driver.close()
-        print('all item has scrap')
     else:
         print('please input correct number')
         run()
+    print('all item has scrap')
 
 
 run()
