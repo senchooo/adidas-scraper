@@ -22,7 +22,7 @@ def login_query(user, password, query):
     time.sleep(10)
 
     # click login
-    driver.find_element(by=By.XPATH, value='//*[@id="root"]/main/div/div/div/div[1]/form/div[3]/button').click()
+    driver.find_element(by=By.XPATH, value='//*[@id="root"]/main/div/div/div/div[1]/form/div[4]/button/span').click()
     time.sleep(3)
 
     # fill search box and search
@@ -91,9 +91,9 @@ def scrap_sorting(sort_filter):
 
 def run():
     runing = int(input('please choose\n1. scraping only\n2. scraping with sorting\nchoose your number: '))
-    user = input('Input Your Username')
-    password = input('Input Your Password')
-    query = input('Input Your Query')
+    user = input('Input Your Username: ')
+    password = input('Input Your Password: ')
+    query = input('Input Your Query: ')
 
     if runing == 1:
         login_query(user=user, password=password, query=query)
